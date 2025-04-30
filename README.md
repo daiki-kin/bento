@@ -75,7 +75,3 @@
 ## ■ 画面遷移図
 
 https://www.figma.com/design/mCypwhWG4lIbXESPLokh6Z/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=17-1308&p=f&t=EvTwH3Ey6Ir5VvyC-0
-
-## ■ ER 図
-
-https://dbdiagram.io/d/6811acdb1ca52373f5ea9289
