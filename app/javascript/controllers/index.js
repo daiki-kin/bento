@@ -1,7 +1,6 @@
 import { Application } from "@hotwired/stimulus";
-import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers";
+import HelloController from "./hello_controller"; // 使用しているコントローラに応じて追加
 
 const application = Application.start();
 
-const context = require.context("./", true, /\.js$/);
-application.load(definitionsFromContext(context));
+application.register("hello", HelloController);
