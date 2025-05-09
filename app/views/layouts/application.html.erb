@@ -15,9 +15,13 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body>
+    <div class="p-6 bg-green-100 text-center rounded-lg">
+      Tailwind CSS が正しく読み込まれています！
+    </div>
     <%= yield %>
   </body>
 </html>
