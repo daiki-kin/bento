@@ -1,6 +1,4 @@
-import { Application } from "@hotwired/stimulus";
-import HelloController from "./hello_controller"; // 使用しているコントローラに応じて追加
-
-const application = Application.start();
-
-application.register("hello", HelloController);
+// Import and register all your controllers from the importmap via controllers/**/*_controller
+import { application } from "controllers/application"
+import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
+eagerLoadControllersFrom("controllers", application)

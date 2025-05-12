@@ -1,7 +1,2 @@
-import "@hotwired/turbo-rails";
-import "./controllers";
-import { Application } from "@hotwired/stimulus";
-import "../assets/stylesheets/application.tailwind.css";
-
-// Stimulus アプリケーションの初期化
-const application = Application.start();
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+import "controllers"
