@@ -12,5 +12,17 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  root 'staticpages#top'
+  # 以下追加
+  root 'home#index'  # トップページに home#index を設定
+
+  # ユーザー管理
+  resources :users, only: [:new, :create, :show]
+
+  # ユーザーによる投稿
+  resources :posts, only: [:index, :new, :create, :show]
+
+  # セッション管理（ログイン・ログアウト）
+get    'login',  to: 'sessions#new'
+post   'login',  to: 'sessions#create'
+delete 'logout', to: 'sessions#destroy'
 end
