@@ -1,0 +1,12 @@
+<h1 class="text-center text-2xl font-bold">パスワード再発行</h1>
+<p class="text-center mt-4">ご登録のメールアドレスを入力してください。</p>
+
+<%= form_with url: password_resets_path, method: :post, local: true do |f| %>
+  <div class="mt-6">
+    <%= f.label :email, 'メールアドレス' %>
+    <%= f.email_field :email, class: 'input w-full mt-2' %>
+  </div>
+  <div class="mt-6 text-center">
+    <%= f.submit 'メールを送信する', class: 'btn btn-primary' %>
+  </div>
+<% end %>
