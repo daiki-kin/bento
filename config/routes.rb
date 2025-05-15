@@ -22,7 +22,17 @@ Rails.application.routes.draw do
   resources :posts, only: [:index, :new, :create, :show]
 
   # セッション管理（ログイン・ログアウト）
-get    'login',  to: 'sessions#new'
-post   'login',  to: 'sessions#create'
-delete 'logout', to: 'sessions#destroy'
+  get    'login',  to: 'sessions#new'
+  post   'login',  to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+
+  # ユーザー登録
+  post "/signup", to: "users#create"
+
+  # パスワードリセット
+  resources :password_resets, only: [:new, :create, :edit, :update]
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
 end
