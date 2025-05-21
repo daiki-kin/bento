@@ -1,0 +1,51 @@
+<!-- ヘッダー -->
+<div class="flex justify-end space-x-2 mb-4">
+    <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" %>
+    <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" %>
+    <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
+</div>
+
+<h1 class="text-2xl font-bold text-center my-6">投稿編集</h1>
+
+<%= form_with model: @post, local: true do |f| %>
+  <div class="max-w-xl mx-auto space-y-6">
+
+    <!-- 店舗名 -->
+    <div>
+      <label>店舗名</label>
+      <%= f.text_field :store_name, class: "w-full bg-gray-100 p-2 rounded" %>
+    </div>
+
+    <!-- コメント -->
+    <div>
+      <label>コメント</label>
+      <%= f.text_area :review, class: "w-full bg-gray-100 p-2 rounded", rows: 4 %>
+    </div>
+
+    <!-- 住所 -->
+    <div>
+      <label>住所</label>
+      <%= f.text_field :address, class: "w-full bg-gray-100 p-2 rounded" %>
+    </div>
+
+    <!-- 画像 -->
+    <div>
+      <label>画像</label>
+      <%= f.file_field :post_image, class: "w-full bg-gray-100 p-2 rounded" %>
+    </div>
+
+    <!-- 星評価 -->
+    <div>
+      <label>星評価</label><br>
+      <% 1.upto(5) do |i| %>
+        <%= f.radio_button :rating, i, id: "rating_#{i}" %>
+        <label for="rating_<%= i %>">⭐</label>
+      <% end %>
+    </div>
+
+    <!-- 更新ボタン -->
+    <div class="text-center">
+      <%= f.submit "更新する", class: "bg-indigo-500 text-white px-6 py-2 rounded" %>
+    </div>
+  </div>
+<% end %>

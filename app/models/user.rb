@@ -1,10 +1,19 @@
 class User < ApplicationRecord
-    has_secure_password
+    has_many :posts, dependent: :destroy
+
+    has_many :likes, dependent: :destroy
+    has_many :liked_posts, through: :likes, source: :post
+
+    has_one_attached :profile_image
 
     validates :name, presence: true
     validates :email, presence: true, uniqueness: true
     validates :password, length: { minimum: 6 }, if: -> { password.present? }
 
+    devise :database_authenticatable, :registerable,
+            :recoverable, :rememberable, :validatable
+
+    # パスワード再発行
     def generate_password_reset_token!
         update!(
             reset_password_token: SecureRandom.uuid,

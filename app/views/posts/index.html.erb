@@ -1,0 +1,17 @@
+  <!-- ヘッダー -->
+  <div class="flex justify-end space-x-2 mb-4">
+    <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" %>
+    <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" %>
+    <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
+  </div>
+  <!-- タイトル -->
+<h1 class="text-2xl font-bold mb-4">投稿一覧</h1>
+
+<% @posts.each do |post| %>
+  <div class="border p-4 rounded mb-2">
+    <h2 class="text-xl font-semibold"><%= post.store_name %></h2>
+    <p><%= post.review %></p>
+    <p class="text-sm text-gray-500"><%= post.address %></p>
+    <p>評価: <%= post.rating %> / 5</p>
+  </div>
+<% end %>

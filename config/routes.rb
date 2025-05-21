@@ -12,14 +12,15 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+
   # 以下追加
   root 'home#index'  # トップページに home#index を設定
 
   # ユーザー管理
   resources :users, only: [:new, :create, :show]
-
-  # ユーザーによる投稿
-  resources :posts, only: [:index, :new, :create, :show]
 
   # セッション管理（ログイン・ログアウト）
   get    'login',  to: 'sessions#new'
@@ -31,6 +32,25 @@ Rails.application.routes.draw do
 
   # パスワードリセット
   resources :password_resets, only: [:new, :create, :edit, :update]
+
+  # ユーザーによる投稿
+  resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+
+  # プロフィール編集
+  resource :profile, only: [:edit, :update]
+
+  # いいね
+  resources :users, only: [:show] do
+    get 'liked_posts', on: :member
+  end
+  resources :posts do
+    resource :like, only: [:create, :destroy]
+  end
+
+  # お問い合わせ
+  get '/terms', to: 'static_pages#terms', as: 'terms'
+  get '/privacy', to: 'static_pages#privacy', as: 'privacy'
+  get '/contact', to: 'static_pages#contact', as: 'contact'
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"

@@ -1,0 +1,16 @@
+<!-- ヘッダー -->
+<div class="flex justify-end space-x-2 mb-4">
+    <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" %>
+    <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" %>
+    <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
+</div>
+
+<h1 class="text-2xl font-bold text-center my-6">プロフィール編集</h1>
+
+<div class="flex justify-center space-x-4 mb-6">
+    <%= link_to "自分の投稿", user_path(current_user), class: "border px-4 py-2 rounded" %>
+    <%= link_to "いいねの投稿", liked_posts_user_path(current_user), class: "border px-4 py-2 rounded" %>
+    <%= link_to "プロフィール編集", edit_profile_path, class: "border px-4 py-2 rounded bg-gray-100" %>
+</div>
+
+<%= render partial: "form", locals: { user: @user } %>
