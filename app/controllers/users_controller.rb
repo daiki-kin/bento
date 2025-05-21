@@ -1,6 +1,17 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show]
   def new
     @user = User.new
+  end
+
+  def show
+    @user = current_user
+    @posts = @user.posts.with_attached_post_image
+  end
+
+  def liked_posts
+    @user = current_user
+    @liked_posts = @user.liked_posts # いいね機能がある場合
   end
 
   def create
@@ -16,5 +27,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end

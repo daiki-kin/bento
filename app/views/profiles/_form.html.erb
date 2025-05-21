@@ -1,0 +1,63 @@
+<div id="profile_form">
+  <div id="profile_image_preview" class="mt-2"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const input = document.getElementById("profile_image_input");
+      const preview = document.getElementById("profile_image_preview");
+
+      if (!input) return;
+
+      input.addEventListener("change", function () {
+        preview.innerHTML = ""; // 以前の画像を消去
+
+        const file = this.files[0];
+        if (!file || !file.type.match("image.*")) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.alt = "画像プレビュー";
+          img.className = "rounded w-40 h-auto mt-2 border";
+          preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  </script>
+
+  <%= form_with model: user, url: profile_path, method: :patch, html: { multipart: true } do |f| %>
+    <div class="max-w-md mx-auto space-y-4">
+      <div>
+        <%= f.label :profile_image, "プロフィール画像" %><br>
+        <%= f.file_field :profile_image, id: "profile_image_input", class: "w-full border px-4 py-2 rounded bg-gray-100" %>
+        <!-- プレビュー表示用 -->
+        <div id="profile_image_preview" class="mt-2">
+          <% if user.profile_image.attached? %>
+            <%= image_tag user.profile_image.variant(resize_to_limit: [200, 200]), class: "rounded" %>
+          <% end %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.label :name, "ユーザー名" %><br>
+        <%= f.text_field :name, placeholder: "ユーザー名を記入", class: "w-full border px-4 py-2 rounded bg-gray-100" %>
+      </div>
+
+      <p class="text-sm text-gray-500">入力は任意です</p>
+
+      <div>
+        <%= f.label :gender, "性別" %><br>
+        <%= f.select :gender, [["男性", "male"], ["女性", "female"], ["その他", "other"]], { prompt: "性別" }, class: "w-full border px-4 py-2 rounded bg-gray-100" %>
+      </div>
+
+      <div>
+        <%= f.label :age_group, "年代" %><br>
+        <%= f.select :age_group, [["10代", "10s"], ["20代", "20s"], ["30代", "30s"], ["40代以上", "40s_plus"]], { prompt: "年代" }, class: "w-full border px-4 py-2 rounded bg-gray-100" %>
+      </div>
+
+      <%= f.submit "更新する", class: "bg-indigo-500 text-white px-6 py-2 rounded hover:bg-indigo-600" %>
+    </div>
+  <% end %>
+</div>

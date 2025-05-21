@@ -1,6 +1,5 @@
-import "./controllers";
-import "@rails/ujs";
-import "@hotwired/turbo";
-
 import Rails from "@rails/ujs";
 Rails.start();
+
+import "@hotwired/turbo-rails"; // Turbo用
+import "./controllers"; // Stimulusは自作 index.js が呼び出される

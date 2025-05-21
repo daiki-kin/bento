@@ -1,0 +1,50 @@
+<div class="text-center my-8">
+  <!-- ヘッダー -->
+  <div class="flex justify-end space-x-2 mb-4">
+    <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" %>
+    <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" %>
+    <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
+  </div>
+
+  <h1 class="text-3xl font-bold mb-6">投稿の詳細</h1>
+  <div class="flex justify-center space-x-4 mb-6">
+    <%= link_to "自分の投稿", user_path(current_user), class: "border px-4 py-2 rounded" %>
+    <%= link_to "いいねの投稿", liked_posts_user_path(current_user), class: "border px-4 py-2 rounded" %>
+    <%= link_to "プロフィール編集", edit_profile_path, class: "border px-4 py-2 rounded bg-gray-100" %>
+  </div>
+
+
+  <div class="bg-yellow-200 max-w-4xl mx-auto p-8 rounded-lg flex flex-col md:flex-row items-center">
+    <div class="w-48 h-48 flex-shrink-0 mb-6 md:mb-0 md:mr-8">
+      <%= image_tag @post.post_image, class: "rounded-full object-cover w-full h-full" if @post.post_image.attached? %>
+    </div>
+
+    <div class="text-left">
+      <h2 class="font-bold text-lg mb-2"><%= @post.store_name %>さん</h2>
+      <p class="mb-2"><strong>コメント</strong><br><%= simple_format(@post.review) %></p>
+      <p class="mb-2"><strong>住所</strong><br><%= @post.address %></p>
+
+      <p class="mt-4 font-bold">星評価</p>
+      <div class="flex text-yellow-400 text-2xl">
+        <% 5.times do |i| %>
+          <% if i < @post.rating %>
+            ★
+          <% else %>
+            <span class="text-gray-300">★</span>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="mt-6 flex space-x-4">
+        <%= link_to '編集', edit_post_path(@post), class: 'bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded' %>
+        <%= link_to '削除', post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+      </div>
+    </div>
+  </div>
+
+  <footer class="mt-10 bg-yellow-100 py-4 text-center text-gray-700 text-sm">
+    <a href="#" class="mx-2">利用規約</a>
+    <a href="#" class="mx-2">プライバシー規約</a>
+    <a href="#" class="mx-2">お問い合わせ先</a>
+  </footer>
+</div>
