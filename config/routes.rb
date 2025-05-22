@@ -40,12 +40,13 @@ Rails.application.routes.draw do
   resource :profile, only: [:edit, :update]
 
   # いいね
-  resources :users, only: [:show] do
-    get 'liked_posts', on: :member
+  resources :users do
+    get 'liked_posts', on: :member # ユーザーのいいねした投稿一覧
   end
   resources :posts do
     resource :like, only: [:create, :destroy]
   end
+  resources :likes, only: [:create, :destroy]
 
   # お問い合わせ
   get '/terms', to: 'static_pages#terms', as: 'terms'

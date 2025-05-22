@@ -7,19 +7,18 @@ class SessionsController < ApplicationController
   def create
     # ログイン処理
     user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password])
-      session[:user_id] = user.id
+    if user&.valid_password?(params[:password])
+      sign_in(user)
       redirect_to root_path, notice: 'ログインしました'
     else
-      flash.now[:alert] = 'メールアドレスまたはパスワードが正しくありません'
-      render :new, layout: 'application', status: :unprocessable_entity
+      flash.now[:alert] = 'メールアドレスまたはパスワードが違います'
+      render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     # ログアウト処理
-    session.delete(:user_id)
-    @current_user = nil
-    redirect_to root_path, notice: 'ログアウトしました'
+    sign_out(current_user)
+    redirect_to login_path, notice: 'ログアウトしました'
   end
 end

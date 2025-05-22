@@ -10,9 +10,9 @@
   <!-- ヘッダー -->
   <header class="flex justify-end items-center p-4 space-x-4">
     <a href="/posts/new" class="border px-4 py-2 rounded">新規投稿</a>
-    <% if logged_in? %>
+    <% if user_signed_in? %>
       <%= link_to 'マイページ', user_path(current_user), class: 'bg-green-500 text-white px-4 py-2 rounded' %>
-      <%= button_to "ログアウト", logout_path, method: :delete, class: "bg-gray-500 text-white px-4 py-2 rounded" %>
+      <%= button_to 'ログアウト', logout_path, method: :delete, class: "bg-gray-500 text-white px-4 py-2 rounded" %>
     <% else %>
       <%= link_to 'ログイン', login_path, class: 'bg-yellow-600 text-white px-4 py-2 rounded' %>
     <% end %>
@@ -39,23 +39,30 @@
   <section class="px-6">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-lg font-semibold">新規投稿</h2>
-      <a href="/posts" class="text-sm text-gray-600 underline">もっと見る</a>
+      <%= link_to 'もっと見る', posts_path, class: 'text-sm text-gray-600 underline' %>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <!-- サンプル画像カード（繰り返し） -->
-      <div class="bg-yellow-100 p-2 rounded">
-        <img src="https://via.placeholder.com/200" alt="お弁当画像" class="rounded">
-      </div>
-      <div class="bg-yellow-100 p-2 rounded">
-        <img src="https://via.placeholder.com/200" alt="お弁当画像" class="rounded">
-      </div>
-      <div class="bg-yellow-100 p-2 rounded">
-        <img src="https://via.placeholder.com/200" alt="お弁当画像" class="rounded">
-      </div>
-      <div class="bg-yellow-100 p-2 rounded">
-        <img src="https://via.placeholder.com/200" alt="お弁当画像" class="rounded">
-      </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <% @posts.first(4).each do |post| %>
+        <div class="bg-yellow-100 rounded-xl p-4 flex flex-col items-center">
+          <% if post.post_image.attached? %>
+            <%= image_tag post.post_image, class: "rounded-full w-32 h-32 object-cover" %>
+          <% else %>
+            <div class="rounded-full w-32 h-32 bg-gray-200 flex items-center justify-center">
+              No Image
+            </div>
+          <% end %>
+          <p class="font-bold mt-2"><%= post.user.name %></p>
+          <p class="text-sm text-gray-700 mt-1">コメント</p>
+          <p class="text-sm"><%= post.review %></p>
+          <%= link_to '詳細', post_path(post), class: "btn btn-sm bg-purple-100 text-black mt-3" %>
+          <% if post.likes.exists?(user: current_user) %>
+            <%= button_to '❤️', post_like_path(post), method: :delete, class: "text-red-500" %>
+          <% else %>
+            <%= button_to '🤍', post_like_path(post), method: :post, class: "text-gray-500" %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </section>
 
