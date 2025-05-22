@@ -41,6 +41,10 @@ class PostsController < ApplicationController
         redirect_to user_path(current_user), notice: "投稿を削除しました"
     end
 
+    def liked_posts
+        @liked_posts = current_user.liked_posts
+    end
+
     private
 
     def post_params

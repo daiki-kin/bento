@@ -6,8 +6,7 @@
     <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
   </div>
 
-  <!-- タイトル -->
-  <h1 class="text-3xl font-bold text-center mt-6 mb-4">マイページ</h1>
+  <h1 class="text-2xl font-bold text-center mb-6">いいねした投稿一覧</h1>
 
   <!-- ナビゲーション -->
   <div class="flex justify-center space-x-4 mb-6">
@@ -15,12 +14,9 @@
     <%= link_to 'いいねの投稿', liked_posts_user_path(current_user), class: "btn btn-outline" %>
     <%= link_to 'プロフィール編集', edit_profile_path, class: "border px-4 py-2 rounded bg-gray-100" %>
   </div>
-
-  <!-- 自分の投稿 -->
-  <h2 class="text-2xl font-bold text-center mb-4">自分の投稿</h2>
-
+    <!-- いいねした投稿 -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <% @posts.each do |post| %>
+    <% @liked_posts.each do |post| %>
       <div class="bg-yellow-100 rounded-xl p-4 flex flex-col items-center">
         <% if post.post_image.attached? %>
           <%= image_tag post.post_image, class: "rounded-full w-32 h-32 object-cover" %>
@@ -29,15 +25,10 @@
             No Image
           </div>
         <% end %>
-        <p class="font-bold mt-2"><%= post.user.name %></p>
+        <p class="font-bold mt-2"><%= post.store_name %></p>
         <p class="text-sm text-gray-700 mt-1">コメント</p>
-        <p class="text-sm"><%= post.review %></p>
+        <p class="text-sm"><%= truncate(post.review, length: 40) %></p>
         <%= link_to '詳細', post_path(post), class: "btn btn-sm bg-purple-100 text-black mt-3" %>
-        <% if post.likes.exists?(user: current_user) %>
-          <%= button_to '❤️', post_like_path(post), method: :delete, class: "text-red-500" %>
-        <% else %>
-          <%= button_to '🤍', post_like_path(post), method: :post, class: "text-gray-500" %>
-        <% end %>
       </div>
     <% end %>
   </div>

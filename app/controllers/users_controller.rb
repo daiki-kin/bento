@@ -23,6 +23,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def liked_posts
+    @user = User.find(params[:id])
+    @liked_posts = @user.liked_posts.includes(:post_image_attachment)
+  end
+
   private
 
   def user_params
