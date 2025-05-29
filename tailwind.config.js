@@ -3,7 +3,7 @@ module.exports = {
     "./app/views/**/*.{html.erb,html.haml,html.slim}",
     "./app/helpers/**/*.rb",
     "./app/javascript/**/*.js",
-    "./app/components/**/*.{html.erb,html.haml,html.slim}", // 使っていれば追加
+    "./app/components/**/*.{html.erb,html.haml,html.slim}",
     "./app/assets/stylesheets/**/*.css",
     "./config/initializers/**/*.rb",
   ],
