@@ -42,6 +42,7 @@ class PostsController < ApplicationController
             format.html { redirect_to user_path(current_user), notice: '投稿が完了しました' }
           end
         else
+          puts @post.errors.full_messages
           respond_to do |format|
             format.turbo_stream { render turbo_stream: turbo_stream.replace("post_form", partial: "posts/form", locals: { post: @post }), status: :unprocessable_entity }
             format.html { render :new, status: :unprocessable_entity }
