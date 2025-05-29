@@ -35,14 +35,11 @@
       </div>
 
       <!-- 星評価 -->
-      <div>
-        <%= f.label :rating, "星評価", class: "font-bold" %><br>
-        <div class="rating rating-lg">
-          <% 5.times do |i| %>
-            <%= f.radio_button :rating, i + 1, id: "rating_#{i+1}", class: "hidden" %>
-            <label for="rating_<%= i+1 %>" class="mask mask-star-2 bg-yellow-400 cursor-pointer"></label>
-          <% end %>
-        </div>
+      <div class="rating rating-lg">
+        <% 5.times do |i| %>
+          <%= f.radio_button :rating, i + 1, id: "rating_#{i+1}", class: "sr-only" %>
+          <label for="rating_<%= i+1 %>" class="mask mask-star-2 bg-yellow-400 cursor-pointer"></label>
+        <% end %>
       </div>
 
       <!-- ボタン -->

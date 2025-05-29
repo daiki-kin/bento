@@ -43,6 +43,11 @@
   </div>
 </div>
 
+<!-- ページネーション -->
+<div class="mt-10 flex justify-center">
+  <%= paginate @posts %>
+</div>
+
 <!-- フッター -->
 <footer class="bg-yellow-100 mt-12 py-4 text-center text-sm text-gray-700 space-x-6">
   <%= link_to '利用規約', terms_path %>
