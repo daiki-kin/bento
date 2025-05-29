@@ -1,15 +1,39 @@
 <%= form_with model: post, local: true do |f| %>
   <div>
-    <%= f.label :image %>
-    <%= f.file_field :image %>
+    <%= f.label :post_image, "画像" %>
+    <%= f.file_field :post_image %>
   </div>
+
   <div>
-    <%= f.label :comment %>
-    <%= f.text_area :comment %>
+    <%= f.label :store_name, "店舗名" %>
+    <%= f.text_field :store_name %>
   </div>
-  <div class="field">
+
+  <div>
+    <%= f.label :review, "レビュー" %>
+    <%= f.text_area :review %>
+  </div>
+
+  <div>
+    <%= f.label :rating, "評価 (1〜5)" %>
+    <%= f.select :rating, options_for_select(1..5) %>
+  </div>
+
+  <div>
     <%= f.label :address, "住所" %>
     <%= f.text_field :address %>
   </div>
+
+  <% if post.errors.any? %>
+    <div class="error-messages">
+      <h3><%= pluralize(post.errors.count, "件のエラー") %>があります：</h3>
+      <ul>
+        <% post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <%= f.submit "投稿する", class: "btn btn-primary mt-4" %>
 <% end %>
