@@ -78,9 +78,6 @@ document.addEventListener("turbo:load", () => {
 
   form.classList.add("hidden");
 
-  // 既存リスナーを外す（removeEventListenerを使う場合は関数を変数化しないと外せないので代替案）
-  // ここではaddEventListenerを1回だけ呼ぶ工夫として、btn.dataset.listenerAdded を利用
-
   if (!btn.dataset.listenerAdded) {
     btn.addEventListener("click", () => {
       form.classList.toggle("hidden");

@@ -8,7 +8,7 @@
 
   <h1 class="text-3xl font-bold text-center mb-8">新規投稿</h1>
 
-  <%= form_with model: @post, local: true do |f| %>
+  <%= form_with model: @post, data: { turbo_stream: true } do |f| %>
     <div class="space-y-6">
       <!-- 店舗名 -->
       <div>
@@ -37,7 +37,7 @@
       <!-- 星評価 -->
       <div class="rating rating-lg">
         <% 5.times do |i| %>
-          <%= f.radio_button :rating, i + 1, id: "rating_#{i+1}", class: "sr-only" %>
+          <%= f.radio_button :rating, i + 1, id: "rating_#{i+1}", class: "sr-only", checked: @post.rating == (i + 1) %>
           <label for="rating_<%= i+1 %>" class="mask mask-star-2 bg-yellow-400 cursor-pointer"></label>
         <% end %>
       </div>
