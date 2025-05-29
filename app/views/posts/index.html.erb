@@ -1,17 +1,105 @@
-  <!-- ヘッダー -->
-  <div class="flex justify-end space-x-2 mb-4">
-    <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" %>
-    <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" %>
-    <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
-  </div>
-  <!-- タイトル -->
-<h1 class="text-2xl font-bold mb-4">投稿一覧</h1>
+<!-- ヘッダー -->
+<div class="flex justify-end space-x-2 mb-4">
+  <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" %>
+  <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" %>
+  <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
+</div>
 
-<% @posts.each do |post| %>
-  <div class="border p-4 rounded mb-2">
-    <h2 class="text-xl font-semibold"><%= post.store_name %></h2>
-    <p><%= post.review %></p>
-    <p class="text-sm text-gray-500"><%= post.address %></p>
-    <p>評価: <%= post.rating %> / 5</p>
+<!-- タイトル -->
+<h1 class="text-3xl font-bold text-center mt-6 mb-4">投稿一覧</h1>
+
+<!-- 絞り込みボタン -->
+<div class="flex justify-center my-6">
+  <button id="searchButton" class="bg-yellow-400 hover:bg-yellow-500 text-white px-6 py-2 rounded-lg shadow-md">絞り込み</button>
+</div>
+
+<!-- 検索フォーム -->
+<%= form_tag posts_path, method: :get, class: "fixed top-24 left-1/2 transform -translate-x-1/2 bg-yellow-300 p-6 rounded-xl shadow-lg w-[500px] z-50 hidden", id: "searchForm" do %>
+  <div class="text-right mb-2">
+    <button type="button" class="text-gray-600 text-sm" id="closeSearchFormBtn">✕ 閉じる</button>
+  </div>
+
+  <input type="text" name="keyword" value="<%= params[:keyword] %>" placeholder="🔍 キーワードで探す" class="w-full mb-4 p-2 rounded border">
+
+  <label for="likes_sort" class="block mb-1 font-bold">いいね数</label>
+  <select id="likes_sort" name="likes_sort" class="w-full mb-4 p-2 rounded">
+    <option value="" <%= 'selected' if params[:likes_sort].blank? %>>指定なし</option>
+    <option value="desc" <%= 'selected' if params[:likes_sort] == 'desc' %>>多い順</option>
+    <option value="asc" <%= 'selected' if params[:likes_sort] == 'asc' %>>少ない順</option>
+  </select>
+
+  <label for="rating" class="block mb-1 font-bold">星評価（以上）</label>
+  <select id="rating" name="rating" class="w-full mb-4 p-2 rounded">
+    <option value="" <%= 'selected' if params[:rating].blank? %>>指定なし</option>
+    <option value="1" <%= 'selected' if params[:rating] == '1' %>>★1以上</option>
+    <option value="2" <%= 'selected' if params[:rating] == '2' %>>★2以上</option>
+    <option value="3" <%= 'selected' if params[:rating] == '3' %>>★3以上</option>
+    <option value="4" <%= 'selected' if params[:rating] == '4' %>>★4以上</option>
+    <option value="5" <%= 'selected' if params[:rating] == '5' %>>★5のみ</option>
+  </select>
+
+  <div class="text-center mt-4">
+    <button type="submit" class="bg-white px-4 py-2 rounded shadow">検索する</button>
   </div>
 <% end %>
+
+<!-- 投稿一覧 -->
+<% if @posts.empty? %>
+  <p class="text-center text-gray-500 mt-10">該当する投稿は見つかりませんでした。</p>
+<% else %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-6">
+    <% @posts.each do |post| %>
+      <div class="p-4 bg-yellow-100 rounded-xl shadow">
+        <% if post.post_image.attached? %>
+          <%= image_tag post.post_image.variant(resize_to_fill: [160, 160]), class: "rounded-full mx-auto w-40 h-40 object-cover", loading: "lazy" %>
+        <% else %>
+          <%= image_tag "default_image.png", class: "rounded-full mx-auto w-40 h-40 object-cover", loading: "lazy" %>
+        <% end %>
+
+        <h3 class="mt-2 font-bold text-center"><%= post.store_name %></h3>
+        <p class="text-sm text-center"><%= truncate(post.review, length: 50) %></p>
+        <%= link_to "詳細", post_path(post), class: "mt-2 mx-auto block bg-purple-100 px-4 py-1 rounded-full text-center" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<!-- ページネーション -->
+<div class="mt-10 flex justify-center">
+  <%= paginate @posts %>
+</div>
+
+<!-- 検索ボタン制御スクリプト -->
+<script>
+document.addEventListener("turbo:load", () => {
+  const btn = document.getElementById("searchButton");
+  const form = document.getElementById("searchForm");
+  const closeBtn = document.getElementById("closeSearchFormBtn");
+
+  form.classList.add("hidden");
+
+  // 既存リスナーを外す（removeEventListenerを使う場合は関数を変数化しないと外せないので代替案）
+  // ここではaddEventListenerを1回だけ呼ぶ工夫として、btn.dataset.listenerAdded を利用
+
+  if (!btn.dataset.listenerAdded) {
+    btn.addEventListener("click", () => {
+      form.classList.toggle("hidden");
+    });
+    btn.dataset.listenerAdded = true;
+  }
+
+  if (!closeBtn.dataset.listenerAdded) {
+    closeBtn.addEventListener("click", () => {
+      form.classList.add("hidden");
+    });
+    closeBtn.dataset.listenerAdded = true;
+  }
+});
+</script>
+
+<!-- フッター -->
+<footer class="mt-16 text-center text-sm text-gray-600 py-6 border-t">
+  <a href="#" class="mx-2">利用規約</a>
+  <a href="#" class="mx-2">プライバシー規約</a>
+  <a href="#" class="mx-2">お問い合わせ先</a>
+</footer>

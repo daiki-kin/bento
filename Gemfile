@@ -71,3 +71,11 @@ gem 'letter_opener_web'
 gem "bcrypt", "~> 3.1.7"
 
 gem 'devise'
+
+gem 'kaminari'
+
+gem "tailwindcss-rails", "~> 4.2"
+
+gem 'geocoder'
+
+gem 'dotenv-rails'

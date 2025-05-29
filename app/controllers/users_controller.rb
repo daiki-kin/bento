@@ -7,6 +7,8 @@ class UsersController < ApplicationController
   def show
     @user = current_user
     @posts = @user.posts.with_attached_post_image
+
+    @posts = @user.posts.page(params[:page]).per(8)
   end
 
   def liked_posts

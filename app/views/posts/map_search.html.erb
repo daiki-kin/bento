@@ -1,0 +1,93 @@
+<div class="flex justify-end space-x-2 mb-4">
+  <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" %>
+  <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" %>
+  <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
+</div>
+
+<h1 class="text-2xl font-bold text-center mt-8">地図で検索（投稿）</h1>
+
+<div class="flex justify-center space-x-2 mt-4">
+  <input type="text" id="keyword" placeholder="キーワード" class="input input-bordered" />
+  <select id="likes-sort" class="select select-bordered">
+    <option value="desc">人気順</option>
+    <option value="asc">低評価順</option>
+  </select>
+  <select id="rating" class="select select-bordered">
+    <option value="">評価なし</option>
+    <option value="1">★1以上</option>
+    <option value="2">★2以上</option>
+    <option value="3">★3以上</option>
+    <option value="4">★4以上</option>
+    <option value="5">★5のみ</option>
+  </select>
+  <button id="search-button" class="btn btn-primary">検索</button>
+</div>
+
+<div id="map" class="w-full h-96 mt-4 rounded shadow"></div>
+
+<script>
+  let map;
+  let markers = [];
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: 26.2124, lng: 127.6809 },
+      zoom: 14,
+    });
+
+    searchPosts();
+
+    document.getElementById("search-button").addEventListener("click", searchPosts);
+  }
+
+  function searchPosts() {
+    const keyword = document.getElementById("keyword").value;
+    const likesSort = document.getElementById("likes-sort").value;
+    const rating = document.getElementById("rating").value;
+
+    fetch(`/posts/search?keyword=${keyword}&likes_sort=${likesSort}&rating=${rating}`)
+      .then((res) => res.json())
+      .then((posts) => {
+        markers.forEach(m => m.setMap(null));
+        markers = [];
+
+        posts.forEach((post) => {
+          if (!post.latitude || !post.longitude) return;
+
+          const marker = new google.maps.Marker({
+            position: { lat: parseFloat(post.latitude), lng: parseFloat(post.longitude) },
+            map: map,
+            title: post.name,
+          });
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: `
+              <div class="popup-card">
+                <img src="${post.image_url}" style="width:100px;" />
+                <h3>${post.name}</h3>
+                <p>${post.comment}</p>
+                <a href="/posts/${post.id}">詳細</a>
+              </div>
+            `,
+          });
+
+          marker.addListener("click", () => {
+            infoWindow.open(map, marker);
+          });
+
+          markers.push(marker);
+        });
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+  });
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtw3oxtpO_da_zohiuxM5DsBALnPAsICk&callback=initMap"></script>
+
+<footer class="mt-16 text-center text-sm text-gray-600 py-6 border-t">
+  <a href="#" class="mx-2">利用規約</a>
+  <a href="#" class="mx-2">プライバシー規約</a>
+  <a href="#" class="mx-2">お問い合わせ先</a>
+</footer>
