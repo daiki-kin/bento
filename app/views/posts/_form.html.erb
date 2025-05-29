@@ -14,9 +14,12 @@
     <%= f.text_area :review %>
   </div>
 
-  <div>
-    <%= f.label :rating, "評価 (1〜5)" %>
-    <%= f.select :rating, options_for_select(1..5) %>
+  <div class="field">
+    <%= form.label :rating, "評価" %>
+    <% 5.downto(1) do |i| %>
+      <%= form.radio_button :rating, i %>
+      <%= label_tag "post_rating_#{i}", "★" * i %><br>
+    <% end %>
   </div>
 
   <div>

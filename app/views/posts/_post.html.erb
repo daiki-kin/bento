@@ -1,0 +1,11 @@
+<div class="p-4 bg-yellow-100 rounded-xl shadow">
+  <% if post.post_image.attached? %>
+    <%= image_tag post.post_image.variant(resize_to_fill: [160, 160]), class: "rounded-full mx-auto w-40 h-40 object-cover", loading: "lazy" %>
+  <% else %>
+    <%= image_tag "default_image.png", class: "rounded-full mx-auto w-40 h-40 object-cover", loading: "lazy" %>
+  <% end %>
+
+  <h3 class="mt-2 font-bold text-center"><%= post.store_name %></h3>
+  <p class="text-sm text-center"><%= truncate(post.review, length: 50) %></p>
+  <%= link_to "詳細", post_path(post), class: "mt-2 mx-auto block bg-purple-100 px-4 py-1 rounded-full text-center" %>
+</div>
