@@ -40,7 +40,7 @@ class PostsController < ApplicationController
         if @post.save
           respond_to do |format|
             format.turbo_stream
-            format.html { redirect_to user_path(current_user), notice: '投稿が完了しました' }
+            format.html { redirect_to root_path, notice: '投稿が完了しました' }
           end
         else
           puts @post.errors.full_messages
