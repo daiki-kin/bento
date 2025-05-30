@@ -11,7 +11,7 @@ class User < ApplicationRecord
     validates :password, length: { minimum: 6 }, if: -> { password.present? }
 
     devise :database_authenticatable, :registerable,
-            :recoverable, :rememberable, :validatable
+            :recoverable, :validatable
 
     # パスワード再発行
     def generate_password_reset_token!
