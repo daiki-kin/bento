@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, except: [:index, :show, :search, :map_search]
 
     def index
         @posts = Post.includes(:likes, post_image_attachment: :blob)

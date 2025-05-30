@@ -1,7 +1,7 @@
 <!-- ヘッダー -->
 <div class="flex justify-end space-x-2 mb-4">
-  <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" %>
-  <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" %>
+  <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" if user_signed_in? %>
+  <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" if user_signed_in? %>
   <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
 </div>
 
