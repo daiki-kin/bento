@@ -8,46 +8,8 @@
 
   <h1 class="text-3xl font-bold text-center mb-8">新規投稿</h1>
 
-  <%= form_with model: @post, local: true do |f| %>
-    <div class="space-y-6">
-      <!-- 店舗名 -->
-      <div>
-        <%= f.label :store_name, "店舗名", class: "font-bold" %>
-        <%= f.text_field :store_name, placeholder: "店舗名", class: "input w-full bg-gray-100" %>
-      </div>
-
-      <!-- コメント -->
-      <div>
-        <%= f.label :review, "コメント", class: "font-bold" %>
-        <%= f.text_area :review, placeholder: "コメント", class: "textarea w-full bg-gray-100" %>
-      </div>
-
-      <!-- 住所 -->
-      <div>
-        <%= f.label :address, "住所", class: "font-bold" %>
-        <%= f.text_field :address, placeholder: "住所", class: "input w-full bg-gray-100" %>
-      </div>
-
-      <!-- 画像 -->
-      <div>
-        <%= f.label :post_image, "画像", class: "font-bold" %>
-        <%= f.file_field :post_image, class: "file-input bg-gray-100" %>
-      </div>
-
-      <!-- 星評価 -->
-      <div class="rating rating-lg">
-        <% 5.times do |i| %>
-          <%= f.radio_button :rating, i + 1, id: "rating_#{i+1}", class: "sr-only" %>
-          <label for="rating_<%= i+1 %>" class="mask mask-star-2 bg-yellow-400 cursor-pointer"></label>
-        <% end %>
-      </div>
-
-      <!-- ボタン -->
-      <div class="flex justify-center mt-6">
-        <%= f.submit "投稿する", class: "btn bg-indigo-500 text-white w-1/2" %>
-      </div>
-    </div>
-  <% end %>
+<div id="post_form">
+  <%= render partial: "posts/form", locals: { post: @post } %>
 </div>
 
 <!-- フッター -->

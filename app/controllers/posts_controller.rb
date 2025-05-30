@@ -28,6 +28,7 @@ class PostsController < ApplicationController
 
     def new
         @post = Post.new
+        @post.rating ||= 3
     end
 
     def show
@@ -37,9 +38,10 @@ class PostsController < ApplicationController
     def create
         @post = current_user.posts.build(post_params)
         if @post.save
-            redirect_to user_path(current_user), notice: '投稿が完了しました'
+            redirect_to root_path, notice: '投稿が完了しました'
         else
-            render :new
+            puts @post.errors.full_messages
+            render :new, status: :unprocessable_entity
         end
     end
 

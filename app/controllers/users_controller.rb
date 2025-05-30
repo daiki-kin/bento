@@ -5,10 +5,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = current_user
-    @posts = @user.posts.with_attached_post_image
+    @user = User.find_by(id: params[:id])
+    if @user.nil?
+      redirect_to root_path, alert: "ユーザーが見つかりません"
+      return
+    end
 
-    @posts = @user.posts.page(params[:page]).per(8)
+    @posts = @user.posts.with_attached_post_image.page(params[:page]).per(8)
   end
 
   def liked_posts
