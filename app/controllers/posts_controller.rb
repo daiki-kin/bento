@@ -38,16 +38,10 @@ class PostsController < ApplicationController
     def create
         @post = current_user.posts.build(post_params)
         if @post.save
-          respond_to do |format|
-            format.turbo_stream
-            format.html { redirect_to root_path, notice: '投稿が完了しました' }
-          end
+            redirect_to root_path, notice: '投稿が完了しました'
         else
-          puts @post.errors.full_messages
-          respond_to do |format|
-            format.turbo_stream { render turbo_stream: turbo_stream.replace("post_form", partial: "posts/form", locals: { post: @post }), status: :unprocessable_entity }
-            format.html { render :new, status: :unprocessable_entity }
-          end
+            puts @post.errors.full_messages
+            render :new, status: :unprocessable_entity
         end
     end
 
