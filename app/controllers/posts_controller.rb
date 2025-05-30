@@ -28,6 +28,7 @@ class PostsController < ApplicationController
 
     def new
         @post = Post.new
+        @post.rating ||= 3
     end
 
     def show

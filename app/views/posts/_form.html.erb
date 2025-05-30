@@ -35,8 +35,9 @@
     <!-- 星評価 -->
     <div class="rating rating-lg">
       <% 5.times do |i| %>
-        <%= f.radio_button :rating, i + 1, id: "rating_#{i+1}", class: "sr-only", checked: post.rating.to_i == (i + 1) %>
-        <label for="rating_<%= i+1 %>" class="mask mask-star-2 bg-yellow-400 cursor-pointer"></label>
+        <% value = i + 1 %>
+        <%= f.radio_button :rating, value, id: "rating_#{value}", class: "sr-only", checked: post.rating.to_i == value || (post.rating.nil? && value == 3) %>
+        <label for="rating_<%= value %>" class="mask mask-star-2 bg-yellow-400 cursor-pointer"></label>
       <% end %>
     </div>
 
