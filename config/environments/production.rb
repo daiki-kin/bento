@@ -104,6 +104,20 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              "smtp.gmail.com",
+    port:                 587,
+    domain:               "gmail.com",
+    user_name:            ENV["daikikinjou344@gmail.com"],         # Gmailアドレス（例: your.email@gmail.com）
+    password:             ENV["blmnjoiirftumuk"],      # 先ほど発行したアプリパスワード
+    authentication:       "plain",
+    enable_starttls_auto: true
+  }
+
+  # メール内のリンクに使うホスト名（本番環境などに応じて書き換え）
+  config.action_mailer.default_url_options = { host: 'https://bento-t46a.onrender.com' }
+
   config.action_mailer.default_url_options = { host: 'https://bento-t46a.onrender.com' }
   Rails.application.routes.default_url_options[:host] = 'https://bento-t46a.onrender.com'
 end
