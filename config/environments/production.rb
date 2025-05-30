@@ -109,8 +109,8 @@ Rails.application.configure do
     address:              "smtp.gmail.com",
     port:                 587,
     domain:               "gmail.com",
-    user_name:            ENV["daikikinjou344@gmail.com"],         # Gmailアドレス（例: your.email@gmail.com）
-    password:             ENV["blmnjoiirftumuk"],      # 先ほど発行したアプリパスワード
+    user_name:            ENV["GMAIL_USERNAME"],         # Gmailアドレス（例: your.email@gmail.com）
+    password:             ENV["GMAIL_APP_PASSWORD"],      # 先ほど発行したアプリパスワード
     authentication:       "plain",
     enable_starttls_auto: true
   }
