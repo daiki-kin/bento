@@ -67,6 +67,9 @@
                 <h3>${post.name}</h3>
                 <p>${post.comment}</p>
                 <a href="/posts/${post.id}">詳細</a>
+                <p><a href="https://www.google.com/maps?q=${post.latitude},${post.longitude}" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">
+                  Googleマップで見る
+                </a></p>
               </div>
             `,
           });
