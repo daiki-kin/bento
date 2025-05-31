@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-    has_many :posts, dependent: :destroy
+    attr_accessor :terms_of_service, :privacy_policy
 
+    has_many :posts, dependent: :destroy
     has_many :likes, dependent: :destroy
     has_many :liked_posts, through: :likes, source: :post
 
@@ -9,6 +10,9 @@ class User < ApplicationRecord
     validates :name, presence: true
     validates :email, presence: true, uniqueness: true
     validates :password, length: { minimum: 6 }, if: -> { password.present? }
+    validates :terms_of_service, acceptance: { message: "に同意してください" }
+    validates :privacy_policy, acceptance: { message: "に同意してください" }
+
 
     devise :database_authenticatable, :registerable,
             :recoverable, :validatable
