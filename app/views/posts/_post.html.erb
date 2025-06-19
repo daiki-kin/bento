@@ -8,4 +8,10 @@
   <h3 class="mt-2 font-bold text-center"><%= post.store_name %></h3>
   <p class="text-sm text-center"><%= truncate(post.review, length: 50) %></p>
   <%= link_to "詳細", post_path(post), class: "mt-2 mx-auto block bg-purple-100 px-4 py-1 rounded-full text-center" %>
+    <%# ▼ Googleマップで見るリンクを追加（緯度経度は post.latitude / post.longitude を想定） %>
+  <% if post.latitude.present? && post.longitude.present? %>
+    <%= link_to "Googleマップで見る", "https://www.google.com/maps?q=#{post.latitude},#{post.longitude}",
+        target: "_blank", rel: "noopener noreferrer",
+        class: "mt-1 mx-auto block bg-blue-100 px-4 py-1 rounded-full text-center text-sm text-blue-800 hover:underline" %>
+  <% end %>
 </div>
