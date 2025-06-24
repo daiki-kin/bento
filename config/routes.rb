@@ -43,9 +43,9 @@ Rails.application.routes.draw do
   resource :profile, only: [:edit, :update]
 
   # お問い合わせ・規約など
+  resource :contact, only: [:new, :create]
   get '/terms', to: 'pages#terms'
   get '/privacy', to: 'pages#privacy'
-  get '/contact', to: 'pages#contact'
 
   # 開発環境限定
   if Rails.env.development?

@@ -22,6 +22,19 @@ ja:
         terms_of_service: "利用規約"
         privacy_policy: "プライバシー規約"
         password_confirmation: "パスワード(確認用)"
+  activemodel:
+    attributes:
+      contact:
+        subject: "件名"
+        name: "お名前"
+        email: "Eメールアドレス"
+        message: "本文"
+    errors:
+      models:
+        contact:
+          attributes:
+            subject:
+              blank: "を入力してください"
   date:
     abbr_day_names:
       - 日

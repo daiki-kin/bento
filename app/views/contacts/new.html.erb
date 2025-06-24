@@ -1,0 +1,56 @@
+<div class="flex justify-end space-x-2 mb-4">
+  <%= link_to '新規投稿', new_post_path, class: "btn btn-outline" if user_signed_in? %>
+  <%= link_to 'マイページ', user_path(current_user), class: "btn bg-yellow-400 text-white" if user_signed_in? %>
+  <%= link_to 'トップページ', root_path, class: "btn btn-primary" %>
+</div>
+
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg border">
+  <h1 class="text-2xl font-bold mb-4">お問い合わせフォーム</h1>
+
+  <% if @contact.errors.any? %>
+    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+      <p class="font-bold">入力内容に誤りがあります：</p>
+      <ul class="list-disc list-inside">
+        <% @contact.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with model: @contact, url: contact_path, local: true do |f| %>
+    <div class="mb-4">
+      <%= f.label :subject, "件名：" %><br>
+      <%= f.text_field :subject, placeholder: "例：サービスの不具合について", class: "border rounded w-full p-2" %>
+      <% if @contact.errors[:subject].present? %>
+        <p class="text-red-500 text-sm mt-1"><%= @contact.errors[:subject].first %></p>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :name, "お名前：" %><br>
+      <%= f.text_field :name, placeholder: "山田 太郎", class: "border rounded w-full p-2" %>
+      <% if @contact.errors[:name].present? %>
+        <p class="text-red-500 text-sm mt-1"><%= @contact.errors[:name].first %></p>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :email, "E-mail：" %><br>
+      <%= f.email_field :email, placeholder: "example@example.com", class: "border rounded w-full p-2" %>
+      <% if @contact.errors[:email].present? %>
+        <p class="text-red-500 text-sm mt-1"><%= @contact.errors[:email].first %></p>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :message, "本文：" %><br>
+      <%= f.text_area :message, rows: 5, placeholder: "お問い合わせ内容を詳しくご記入ください", class: "border rounded w-full p-2" %>
+      <% if @contact.errors[:message].present? %>
+        <p class="text-red-500 text-sm mt-1"><%= @contact.errors[:message].first %></p>
+      <% end %>
+    </div>
+
+    <%= f.submit "送信する", class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition" %>
+  <% end %>
+</div>
