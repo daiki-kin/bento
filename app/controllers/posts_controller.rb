@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-    before_action :authenticate_user!, except: [:index, :show, :search, :map_search]
+    # ユーザー認証を除外するアクションを指定
+    before_action :authenticate_user!, except: [:index, :show, :search, :map_search, :monthly_ranking]
 
     def index
         @posts = Post.includes(:likes, post_image_attachment: :blob)
@@ -100,6 +101,21 @@ class PostsController < ApplicationController
 
     def map_search
         @posts = Post.where.not(latitude: nil, longitude: nil)
+    end
+
+
+    def monthly_ranking
+        start_of_month = Time.current.beginning_of_month
+        end_of_month   = Time.current.end_of_month
+        # 月間ランキングの取得
+        # いいね数でソートし、上位10件を取得
+        @monthly_posts = Post
+            .joins(:likes)
+            .where(likes: { created_at: start_of_month..end_of_month })
+            .group('posts.id')
+            .select('posts.*, COUNT(likes.id) AS likes_count')
+            .order('likes_count DESC')
+            .limit(10)  # 上位10件を表示
     end
 
     private

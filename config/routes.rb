@@ -27,12 +27,13 @@ Rails.application.routes.draw do
   # パスワードリセット
   resources :password_resets, only: [:new, :create, :edit, :update]
 
-  # 投稿関連といいね機能と検索機能
+  # 投稿関連といいね機能と検索機能とランキング機能
   resources :posts do
     resource :like, only: [:create, :destroy]
     collection do
       get :search
       get :map_search
+      get :monthly_ranking
     end
   end
 
