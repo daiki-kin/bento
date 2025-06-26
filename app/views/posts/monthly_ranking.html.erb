@@ -1,0 +1,49 @@
+<div class="text-center mt-10">
+  <h1 class="text-2xl font-bold mb-6">月間ランキング</h1>
+</div>
+
+<div class="flex justify-center space-x-2 mb-8">
+  <%= link_to "投稿一覧で検索", posts_path, class: "bg-yellow-500 text-white px-4 py-2 rounded", data: { turbo: false } %>
+  <%= link_to "地図で検索", map_search_posts_path, class: "bg-blue-500 text-white px-4 py-2 rounded" %>
+  <%= link_to "月間ランキング", monthly_ranking_posts_path, class: "bg-green-500 text-white px-4 py-2 rounded" %>
+</div>
+
+<div class="text-center mb-6 text-gray-600">
+  <p>このランキングは今月「いいね」が多かった投稿の上位を表示しています。</p>
+</div>
+
+<% if @monthly_posts.any? %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 mb-20">
+    <% @monthly_posts.each_with_index do |post, index| %>
+      <div class="bg-yellow-100 p-4 rounded-lg shadow-md text-center">
+        <% if post.post_image.attached? %>
+          <%= image_tag post.post_image.variant(resize_to_limit: [150, 150]), class: "mx-auto rounded-full object-cover w-36 h-36 mb-4" %>
+        <% else %>
+          <div class="bg-gray-200 text-gray-500 rounded-full w-36 h-36 flex items-center justify-center mx-auto mb-4">
+            No Image
+          </div>
+        <% end %>
+
+        <p class="font-bold"><%= post.user.name %></p>
+        <p class="text-sm text-gray-700">コメント</p>
+        <p><%= post.review.truncate(20) %></p>
+
+        <%= link_to "詳細", post_path(post), class: "block mt-2 text-blue-700 font-bold hover:underline" %>
+
+        <div class="mt-2 text-pink-500 text-xl">
+          ❤ <%= post.likes_count %>
+        </div>
+
+        <div class="mt-2 text-sm text-gray-500">
+          <%= "#{index + 1}位" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-center text-gray-500 mt-10">今月のランキング投稿はまだありません。</p>
+<% end %>
+  <div class="mt-10 text-center">
+    <%= link_to "← トップページ", root_path, class: "text-blue-500 hover:underline" %>
+  </div>
+</div>
