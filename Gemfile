@@ -41,7 +41,7 @@ group :development, :test do
   # SQLite3（ローカル用）
   gem "sqlite3", "~> 1.4"
 
-  # RSpec(モデルテスト+システムテスト)
+  # RSpec (モデルテスト+システムテスト)
   gem "rspec-rails"
 end
 
