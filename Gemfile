@@ -43,6 +43,9 @@ group :development, :test do
 
   # RSpec (モデルテスト+システムテスト)
   gem "rspec-rails"
+
+  # rubocop (コードスタイルチェック)
+  gem 'rubocop', require: false
 end
 
 group :development do
