@@ -1,1 +1,1 @@
-require 'devise/orm/active_record'
+require "devise/orm/active_record"

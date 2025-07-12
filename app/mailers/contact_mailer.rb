@@ -5,7 +5,7 @@ class ContactMailer < ApplicationMailer
         @message = message
 
         mail(
-            to: '01_takarajima@dgco.jp', # 管理者のメール
+            to: "01_takarajima@dgco.jp", # 管理者のメール
             from: email,
             subject: subject
         )
