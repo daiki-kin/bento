@@ -45,7 +45,7 @@ group :development, :test do
   gem "rspec-rails"
 
   # rubocop (コードスタイルチェック)
-  gem 'rubocop', require: false
+  gem "rubocop", require: false
 end
 
 group :development do
@@ -70,18 +70,18 @@ end
 
 gem "jsbundling-rails", "~> 1.3"
 
-gem 'letter_opener'
-gem 'letter_opener_web'
+gem "letter_opener"
+gem "letter_opener_web"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
 
-gem 'devise'
+gem "devise"
 
-gem 'kaminari'
+gem "kaminari"
 
 gem "tailwindcss-rails", "~> 4.2"
 
-gem 'geocoder'
+gem "geocoder"
 
-gem 'dotenv-rails'
+gem "dotenv-rails"

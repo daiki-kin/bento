@@ -1,7 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-    # Host 許可 (Render 対応)
+  # Host 許可 (Render 対応)
   config.hosts << /.*\.onrender\.com/
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -116,8 +116,8 @@ Rails.application.configure do
   }
 
   # メール内のリンクに使うホスト名（本番環境などに応じて書き換え）
-  config.action_mailer.default_url_options = { host: 'https://bento-t46a.onrender.com' }
+  config.action_mailer.default_url_options = { host: "https://bento-t46a.onrender.com" }
 
-  config.action_mailer.default_url_options = { host: 'https://bento-t46a.onrender.com' }
-  Rails.application.routes.default_url_options[:host] = 'https://bento-t46a.onrender.com'
+  config.action_mailer.default_url_options = { host: "https://bento-t46a.onrender.com" }
+  Rails.application.routes.default_url_options[:host] = "https://bento-t46a.onrender.com"
 end

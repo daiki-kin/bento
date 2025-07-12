@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
     # ユーザー認証を除外するアクションを指定
-    before_action :authenticate_user!, except: [:index, :show, :search, :map_search, :monthly_ranking]
+    before_action :authenticate_user!, except: [ :index, :show, :search, :map_search, :monthly_ranking ]
 
     def index
         @posts = Post.includes(:likes, post_image_attachment: :blob)
@@ -39,7 +39,7 @@ class PostsController < ApplicationController
     def create
         @post = current_user.posts.build(post_params)
         if @post.save
-            redirect_to root_path, notice: '投稿が完了しました'
+            redirect_to root_path, notice: "投稿が完了しました"
         else
             puts @post.errors.full_messages
             render :new, status: :unprocessable_entity
@@ -112,9 +112,9 @@ class PostsController < ApplicationController
         @monthly_posts = Post
             .joins(:likes)
             .where(likes: { created_at: start_of_month..end_of_month })
-            .group('posts.id')
-            .select('posts.*, COUNT(likes.id) AS likes_count')
-            .order('likes_count DESC')
+            .group("posts.id")
+            .select("posts.*, COUNT(likes.id) AS likes_count")
+            .order("likes_count DESC")
             .limit(10)  # 上位10件を表示
     end
 

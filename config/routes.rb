@@ -5,31 +5,31 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # トップページ
-  root 'home#index'
+  root "home#index"
 
   # Devise（ユーザー認証）
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: "users/registrations"
   }
 
   # ユーザー管理
-  resources :users, only: [:new, :create, :show] do
-    get 'liked_posts', on: :member
+  resources :users, only: [ :new, :create, :show ] do
+    get "liked_posts", on: :member
   end
 
   # セッション管理（ログイン・ログアウト）
-  get    'login',  to: 'sessions#new'
-  post   'login',  to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
+  get    "login",  to: "sessions#new"
+  post   "login",  to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
 
   post "/signup", to: "users#create"
 
   # パスワードリセット
-  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :password_resets, only: [ :new, :create, :edit, :update ]
 
   # 投稿関連といいね機能と検索機能とランキング機能
   resources :posts do
-    resource :like, only: [:create, :destroy]
+    resource :like, only: [ :create, :destroy ]
     collection do
       get :search
       get :map_search
@@ -38,15 +38,15 @@ Rails.application.routes.draw do
   end
 
   # 店舗関連（ショップ詳細）
-  resources :shops, only: [:show]
+  resources :shops, only: [ :show ]
 
   # プロフィール編集
-  resource :profile, only: [:edit, :update]
+  resource :profile, only: [ :edit, :update ]
 
   # お問い合わせ・規約など
-  resource :contact, only: [:new, :create]
-  get '/terms', to: 'pages#terms'
-  get '/privacy', to: 'pages#privacy'
+  resource :contact, only: [ :new, :create ]
+  get "/terms", to: "pages#terms"
+  get "/privacy", to: "pages#privacy"
 
   # 開発環境限定
   if Rails.env.development?

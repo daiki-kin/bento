@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  layout 'application'
+  layout "application"
 
   def new
   end
@@ -9,9 +9,9 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user&.valid_password?(params[:password])
       sign_in(user)
-      redirect_to root_path, notice: 'ログインしました'
+      redirect_to root_path, notice: "ログインしました"
     else
-      flash.now[:alert] = 'メールアドレスまたはパスワードが違います'
+      flash.now[:alert] = "メールアドレスまたはパスワードが違います"
       render :new, status: :unprocessable_entity
     end
   end
@@ -19,6 +19,6 @@ class SessionsController < ApplicationController
   def destroy
     # ログアウト処理
     sign_out(current_user)
-    redirect_to login_path, notice: 'ログアウトしました'
+    redirect_to login_path, notice: "ログアウトしました"
   end
 end
