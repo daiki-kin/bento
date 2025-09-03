@@ -65,7 +65,7 @@ end
 # 以下追加したgem
 # PostgreSQL（本番用）
 group :production do
-  gem "pg", "~> 1.5"
+  gem "pg", "~> 1.6"
 end
 
 gem "jsbundling-rails", "~> 1.3"
