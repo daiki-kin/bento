@@ -39,7 +39,7 @@ group :development, :test do
 
   # 以下追加したgem
   # SQLite3（ローカル用）
-  gem "sqlite3", "~> 1.4"
+  gem "sqlite3", "~> 2.7"
 
   # RSpec (モデルテスト+システムテスト)
   gem "rspec-rails"
